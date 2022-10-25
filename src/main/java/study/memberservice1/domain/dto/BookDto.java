@@ -1,9 +1,7 @@
 package study.memberservice1.domain.dto;
 
+import lombok.*;
 import study.memberservice1.domain.vo.BookVO;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 @Getter @Setter
 @ToString
@@ -13,7 +11,6 @@ public class BookDto {
     private int bookPrice;
     private int bookStockQuantity;
     private String bookAuthor;
-
 
     /**
      * vo를 dto로 변환
