@@ -6,9 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import study.memberservice1.domain.dto.MemberDto;
 import study.memberservice1.domain.dto.MemberSearchDto;
+import study.memberservice1.domain.dto.SearchDto;
 import study.memberservice1.domain.vo.MemberVO;
 import study.memberservice1.mapper.MemberMapper;
-import study.memberservice1.paging.PageInfo;
+import study.memberservice1.paging.Pagination;
+import study.memberservice1.paging.PaginationResponse;
 
 import java.util.List;
 
@@ -52,23 +54,25 @@ public class MemberService {
     }
 
     /**
-     * 조건으로 목록 조회
-     * @param memberSearchDto
+     * 목록 조회(페이징)
+     * @param searchDto
      * @return
      */
-    public List<MemberDto> findMembersByCondition(MemberSearchDto memberSearchDto) {
-        List<MemberVO> findMembers = memberMapper.findMembersByCondition(memberSearchDto);
-        List<MemberDto> result = findMembers.stream()
-                .map(m -> toDto(m)).collect(toList());
-        return result;
+    public PaginationResponse<MemberVO> findMembersByCondition(SearchDto searchDto) {
+        int count = memberMapper.findAllMemberCount(searchDto);
+        // 페이지네이션 계산
+        Pagination pagination = new Pagination(count, searchDto);
+        searchDto.setPagination(pagination);
+        List<MemberVO> members = memberMapper.findMembersByCondition(searchDto);
+        return new PaginationResponse<>(members, pagination);
     }
 
     /**
-     * 목록 조회
+     * 목록 조회(페이징X)
      * @return
      */
-    public List<MemberDto> findAll(MemberSearchDto memberSearchDto) {
-        List<MemberVO> members = memberMapper.findAllMember(memberSearchDto);
+    public List<MemberDto> findAll() {
+        List<MemberVO> members = memberMapper.findAllNoPaging();
         List<MemberDto> result = members.stream()
                 .map(m -> toDto(m)).collect(toList());
         return result;

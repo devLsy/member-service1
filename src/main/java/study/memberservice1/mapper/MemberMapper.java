@@ -1,9 +1,10 @@
 package study.memberservice1.mapper;
 
 import study.memberservice1.domain.dto.MemberSearchDto;
+import study.memberservice1.domain.dto.SearchDto;
 import study.memberservice1.domain.vo.MemberVO;
 import org.apache.ibatis.annotations.Mapper;
-import study.memberservice1.paging.PageInfo;
+import study.memberservice1.paging.PaginationResponse;
 
 import java.util.List;
 
@@ -25,19 +26,25 @@ public interface MemberMapper {
      * 조건으로 목록 조회
      * @return
      */
-    List<MemberVO> findMembersByCondition(MemberSearchDto memberSearchDto);
+    List<MemberVO> findMembersByCondition(SearchDto searchDto);
 
     /**
-     * 목록 조회
+     * 목록 조회(페이지네이션)
      * @return
      */
-    List<MemberVO> findAllMember(MemberSearchDto memberSearchDto);
+    List<MemberVO> findAllMember(SearchDto searchDto);
 
+    /**
+     * 페이징 없이 목록 조회
+     * @return
+     */
+    List<MemberVO> findAllNoPaging();
+    
     /**
      * 전체 카운트
      * @return
      */
-    int findAllMemberCount(MemberSearchDto memberSearchDto);
+    int findAllMemberCount(SearchDto searchDto);
     /**
      * 수정
      */

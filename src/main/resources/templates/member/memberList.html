@@ -6,18 +6,18 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
-    <div>
-        <form th:object="${memberSearch}" class="form-inline">
-            <div class="form-group mb-2">
-                <input type="text" th:field="*{memberName}" class="form-control" placeholder="회원명"/>
-            </div>
-            <div class="form-group mb-2">
-                <input type="text" th:field="*{email}" class="form-control" placeholder="이메일"/>
-            </div>
+<!--    <div>-->
+<!--        <form th:object="${response.getList()}" class="form-inline">-->
+<!--            <div class="form-group mb-2">-->
+<!--                <input type="text" th:field="*{memberName}" class="form-control" placeholder="회원명"/>-->
+<!--            </div>-->
+<!--            <div class="form-group mb-2">-->
+<!--                <input type="text" th:field="*{email}" class="form-control" placeholder="이메일"/>-->
+<!--            </div>-->
 
-            <button type="submit" class="btn btn-primary mb-2">검색</button>
-        </form>
-    </div>
+<!--            <button type="submit" class="btn btn-primary mb-2">검색</button>-->
+<!--        </form>-->
+<!--    </div>-->
 
     <div>
         <table class="table table-striped">
@@ -30,7 +30,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="member : ${members}">
+            <tr th:each="member : ${response.getList()}">
                 <td th:text="${member.memberId}"></td>
                 <td th:text="${member.memberName}"></td>
                 <td th:text="${member.email}"></td>

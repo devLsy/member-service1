@@ -2,6 +2,9 @@ package study.memberservice1.controller;
 
 import study.memberservice1.domain.dto.MemberDto;
 import study.memberservice1.domain.dto.MemberSearchDto;
+import study.memberservice1.domain.dto.SearchDto;
+import study.memberservice1.domain.vo.MemberVO;
+import study.memberservice1.paging.PaginationResponse;
 import study.memberservice1.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,10 +51,9 @@ public class MemberController {
      * @return
      */
     @GetMapping("/members")
-    public String findAllMembers(@ModelAttribute("memberSearch") final MemberSearchDto memberSearchDto, Model model) {
-        MemberSearchDto memberSearchDto1 = new MemberSearchDto();
-        List<MemberDto> members = memberService.findMembersByCondition(memberSearchDto);
-        model.addAttribute("members", members);
+    public String findAllMembers(@ModelAttribute("searchDt") final SearchDto searchDto, Model model) {
+        PaginationResponse<MemberVO> response = memberService.findMembersByCondition(searchDto);
+        model.addAttribute("response", response);
         return "/member/memberList";
     }
 
