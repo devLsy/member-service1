@@ -12,8 +12,8 @@
 
     <!-- 회원 등록 -->
     <insert id="insertMember" parameterType="study.memberservice1.domain.vo.MemberVO">
-        INSERT INTO member (email, member_name, password)
-        VALUES (#{email}, #{memberName}, #{password})
+        INSERT INTO member (email, member_name, password, reg_date)
+        VALUES (#{email}, #{memberName}, #{password}, now())
     </insert>
 
     <!-- 아이디로 회원 검색 -->
@@ -29,11 +29,13 @@
             <if test="memberName != null and memberName != ''" >member_name = #{memberName}</if>
             <if test="email != null and email != ''">AND email = #{email}</if>
         </where>
+        ORDER BY reg_date DESC
     </select>
 
-    <!-- 회원 목록 조회 -->
+    <!-- 회원 목록 조회(페이지네이션) -->
     <select id="findAllMember" resultMap="memberMap">
         SELECT * FROM member
+        ORDER BY reg_date DESC
     </select>
 
     <!-- 회원 수정 -->

@@ -3,6 +3,8 @@ package study.memberservice1.domain.vo;
 import study.memberservice1.domain.dto.MemberDto;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter @Setter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -12,6 +14,7 @@ public class MemberVO {
     private String email;
     private String memberName;
     private String password;
+    private LocalDateTime regDate;
 
     /**
      * dto를 vo로 변환

@@ -13,8 +13,8 @@
 
     <!-- 책 등록 -->
     <insert id="insertBook" parameterType="study.memberservice1.domain.vo.BookVO">
-        INSERT INTO book (book_name, book_price, book_stock_quantity, book_author)
-        VALUES (#{bookName}, #{bookPrice}, #{bookStockQuantity}, #{bookAuthor})
+        INSERT INTO book (book_name, book_price, book_stock_quantity, book_author, reg_date)
+        VALUES (#{bookName}, #{bookPrice}, #{bookStockQuantity}, #{bookAuthor}, now())
     </insert>
 
     <!-- 책 단건 조회 -->
@@ -26,6 +26,7 @@
     <!-- 책 목록 조회 -->
     <select id="findAllBook" resultMap="bookMap">
         SELECT * FROM book
+        ORDER BY reg_date DESC
     </select>
 
     <!-- 책 목록 조건 검색 -->
@@ -35,6 +36,7 @@
             <if test="bookName != null and bookName != ''" >book_name = #{bookName}</if>
             <if test="bookAuthor != null and bookAuthor != ''">AND book_author = #{bookAuthor}</if>
         </where>
+        ORDER BY reg_date DESC
     </select>
 
     <!-- 책 수정 -->

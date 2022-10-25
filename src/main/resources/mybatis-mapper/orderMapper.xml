@@ -40,8 +40,8 @@
 
     <!-- 주문 시 매핑 테이블에 데이터 저장 -->
     <insert id="storeOrderBookMapping" parameterType="map">
-        INSERT INTO order_book_mapping (order_id, book_id, order_price, order_count)
-        VALUES (#{orderId}, #{bookId}, #{orderPrice}, #{orderCount})
+        INSERT INTO order_book_mapping (order_id, book_id, order_price, order_count, reg_date)
+        VALUES (#{orderId}, #{bookId}, #{orderPrice}, #{orderCount}, now())
     </insert>
 
     <!-- 주문 아이디로 책 아이디, 주문수량 조회 -->
@@ -50,6 +50,7 @@
                obm.order_count
         FROM orders o LEFT OUTER JOIN order_book_mapping obm ON o.order_id = obm.order_id
         WHERE o.order_id = #{orderId}
+        ORDER BY order_date DESC
     </select>
 
     <!-- 주문 목록 조회 -->
