@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="study.memberservice1.mapper.BookMapper">
+    <resultMap id="bookMap" type="study.memberservice1.domain.vo.BookVO">
+        <id column="book_id" property="bookId"/>
+        <result column="book_name" property="bookName"/>
+        <result column="book_price" property="bookPrice"/>
+        <result column="book_stock_quantity" property="bookStockQuantity"/>
+        <result column="book_author" property="bookAuthor"/>
+    </resultMap>
+
+    <!-- 책 등록 -->
+    <insert id="insertBook" parameterType="study.memberservice1.domain.vo.BookVO">
+        INSERT INTO book (book_name, book_price, book_stock_quantity, book_author)
+        VALUES (#{bookName}, #{bookPrice}, #{bookStockQuantity}, #{bookAuthor})
+    </insert>
+
+    <!-- 책 단건 조회 -->
+    <select id="findOneBook" parameterType="Long" resultMap="bookMap">
+        SELECT * FROM book
+        WHERE book_id = #{bookId}
+    </select>
+
+    <!-- 책 목록 조회 -->
+    <select id="findAllBook" resultMap="bookMap">
+        SELECT * FROM book
+    </select>
+
+    <!-- 책 목록 조건 검색 -->
+    <select id="findBooksByCondition" parameterType="study.memberservice1.domain.dto.BookSearchDto" resultMap="bookMap">
+        SELECT * FROM book
+        <where>
+            <if test="bookName != null and bookName != ''" >book_name = #{bookName}</if>
+            <if test="bookAuthor != null and bookAuthor != ''">AND book_author = #{bookAuthor}</if>
+        </where>
+    </select>
+
+    <!-- 책 수정 -->
+    <update id="updateBook" parameterType="study.memberservice1.domain.vo.BookVO">
+        UPDATE book SET
+        book_name = #{bookName},
+        book_price = #{bookPrice},
+        book_stock_quantity = #{bookStockQuantity},
+        book_author = #{bookAuthor}
+        WHERE book_id = #{bookId}
+    </update>
+
+    <!-- 책 삭제 -->
+    <delete id="deleteBook" parameterType="Long">
+        DELETE FROM book
+        WHERE book_id = #{bookId}
+    </delete>
+
+    <!-- 책 재고 수정(주문/주문취소 시) -->
+    <update id="updateBookStockQuantity" parameterType="map">
+        UPDATE book SET
+        book_stock_quantity = #{bookStockQuantity}
+        WHERE book_id = #{bookId}
+    </update>
+</mapper>

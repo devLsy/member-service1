@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header" />
+<body>
+
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div>
+        <form th:object="${memberSearch}" class="form-inline">
+            <div class="form-group mb-2">
+                <input type="text" th:field="*{memberName}" class="form-control" placeholder="회원명"/>
+            </div>
+            <div class="form-group mb-2">
+                <input type="text" th:field="*{email}" class="form-control" placeholder="이메일"/>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-2">검색</button>
+        </form>
+    </div>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="member : ${members}">
+                <td th:text="${member.memberId}"></td>
+                <td th:text="${member.memberName}"></td>
+                <td th:text="${member.email}"></td>
+                <td>
+                    <a href="#" th:href="@{/member/{id}/edit (id=${member.memberId})}" class="btn btn-primary" role="button">수정</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div th:replace="fragments/footer :: footer" />
+
+</div> <!-- /container -->
+
+</body>
+</html>
