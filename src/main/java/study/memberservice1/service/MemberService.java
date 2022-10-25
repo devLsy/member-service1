@@ -8,6 +8,7 @@ import study.memberservice1.domain.dto.MemberDto;
 import study.memberservice1.domain.dto.MemberSearchDto;
 import study.memberservice1.domain.vo.MemberVO;
 import study.memberservice1.mapper.MemberMapper;
+import study.memberservice1.paging.PageInfo;
 
 import java.util.List;
 
@@ -66,8 +67,8 @@ public class MemberService {
      * 목록 조회
      * @return
      */
-    public List<MemberDto> findAll() {
-        List<MemberVO> members = memberMapper.findAllMember();
+    public List<MemberDto> findAll(MemberSearchDto memberSearchDto) {
+        List<MemberVO> members = memberMapper.findAllMember(memberSearchDto);
         List<MemberDto> result = members.stream()
                 .map(m -> toDto(m)).collect(toList());
         return result;

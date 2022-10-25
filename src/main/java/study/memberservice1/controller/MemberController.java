@@ -48,7 +48,8 @@ public class MemberController {
      * @return
      */
     @GetMapping("/members")
-    public String findAllMembers(@ModelAttribute("memberSearch")MemberSearchDto memberSearchDto, Model model) {
+    public String findAllMembers(@ModelAttribute("memberSearch") final MemberSearchDto memberSearchDto, Model model) {
+        MemberSearchDto memberSearchDto1 = new MemberSearchDto();
         List<MemberDto> members = memberService.findMembersByCondition(memberSearchDto);
         model.addAttribute("members", members);
         return "/member/memberList";

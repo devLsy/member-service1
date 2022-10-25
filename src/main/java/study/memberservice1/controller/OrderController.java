@@ -28,7 +28,7 @@ public class OrderController {
      */
     @GetMapping("/order/new")
     public String order(Model model) {
-        List<MemberDto> members = memberService.findAll();
+        List<MemberDto> members = memberService.findAll(new MemberSearchDto());
         List<BookDto> books = bookService.findAll();
         model.addAttribute("members", members);
         model.addAttribute("books", books);
