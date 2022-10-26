@@ -39,6 +39,16 @@ create table order_book_mapping (
                                     primary key (order_book_id)
 );
 
+-- 페이징 테스트 용도 게시판
+CREATE TABLE board(
+                      board_id Long auto_increment,
+                      title varchar (30) not null,
+                      content varchar (30) not null,
+                      name varchar (30) not null,
+                      reg_date timestamp,
+                      update_date timestamp,
+                      primary key(board_id)
+);
 
 
 

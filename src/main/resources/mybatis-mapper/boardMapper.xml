@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="study.memberservice1.mapper.BoardMapper">
+    <resultMap id="boardMap" type="study.memberservice1.domain.vo.BoardVO">
+        <id column="board_id" property="boardId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
+    <!-- board insert -->
+    <insert id="insertBoard" parameterType="study.memberservice1.domain.vo.BoardVO">
+        INSERT INTO board (title, content, name, reg_date, update_date)
+        VALUES (#{title}, #{content}, #{name}, now(), now())
+    </insert>
+
+    <!-- board selectList(추후 페이징 추가 예정)-->
+    <select id="findBoardList" resultMap="boardMap">
+        SELECT * FROM board
+    </select>
+
+    <!-- board select detail -->
+    <select id="findBoardDetail" parameterType="Long" resultMap="boardMap">
+        SELECT * FROM board
+        WHERE board_id = #{boardId}
+    </select>
+
+    <!-- 전체 개수 count -->
+    <select id="findBoardCount" parameterType="Long" resultType="Long">
+        SELECT COUNT(*) FROM board
+    </select>
+
+    <!-- board update -->
+    <update id="updateBoard" parameterType="map">
+        UPDATE board SET
+        title = #{boardVO.title},
+        content = #{boardVO.content},
+        name = #{boardVO.name},
+        update_date = now()
+        WHERE board_id = #{boardId}
+    </update>
+
+    <!-- delete board -->
+    <delete id="deleteBoard" parameterType="Long">
+        DELETE FROM board
+        WHERE board_id = #{boardId}
+    </delete>
+
+</mapper>
